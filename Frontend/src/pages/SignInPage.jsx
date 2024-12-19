@@ -1,34 +1,20 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from 'axios'
 
 function SignInPage() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-
-  const navigate = useNavigate();
-
-
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      password: password,
-      email: email,
-    }
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/user/login`, newUser);
-
-    if (response.status == 200) {
-      const data = response.data
-      console.log(data);
-      localStorage.setItem('token', data.token)
-      navigate('/overview')
-    }
-
-    setEmail('');
-    setPassword('');
+    console.log("Login Data:", formData);
+    // Add login logic here
   };
 
   return (
@@ -51,10 +37,8 @@ function SignInPage() {
             type="email"
             id="email"
             name="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-            }}
+            value={formData.email}
+            onChange={handleChange}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
           />
@@ -70,10 +54,8 @@ function SignInPage() {
             type="password"
             id="password"
             name="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value)
-            }}
+            value={formData.password}
+            onChange={handleChange}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
           />
