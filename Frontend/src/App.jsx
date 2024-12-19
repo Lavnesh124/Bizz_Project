@@ -16,18 +16,18 @@ import SignInPage from "./pages/SignInPage";
 
 function App() {
 	const isLoginPage = window.location.pathname.includes('/login');
-	const isSigninPage =  window.location.pathname.includes('/signin');
+	const isSigninPage = window.location.pathname.includes('/signin');
 
 	// const isSidebarVisible1 = window.location.pathname.includes('/signin');
-	
+
 	return (
 		<div className='flex h-screen  text-gray-100 overflow-hidden'>
-			
+
 			{!(isLoginPage || isSigninPage) ? <Sidebar /> : ""}
 			{/* {!isSidebarVisible1 ? <Sidebar /> : ""} */}
-			
+
 			<Routes>
-			    <Route path='/login' element={<RegisterPage />} />
+				<Route path='/login' element={<RegisterPage />} />
 				<Route path='/signin' element={<SignInPage />} />
 				<Route path='/' element={<OverviewPage />} />
 				<Route path='/overview' element={<OverviewPage />} />
@@ -37,10 +37,10 @@ function App() {
 				<Route path='/sales' element={<SalesPage />} />
 				<Route path='/orders' element={<OrdersPage />} />
 				<Route path='/analytics' element={<AnalyticsPage />} />
-				<Route path='/settings' element={<SettingsPage />} /> 
-				
+				<Route path='/settings' element={<SettingsPage />} />
+
 			</Routes>
-		</div> 
+		</div>
 	);
 }
 

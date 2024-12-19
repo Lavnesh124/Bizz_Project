@@ -1,6 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 function RegisterPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [businessName, setbusinessName] = useState('');
+  const [mobileNumber, setmobileNumber] = useState('');
+  const [gstNumber, setgstNumber] = useState('');
+
+
+  const navigate = useNavigate();
+
+
+
   const [formData, setFormData] = useState({
     gstNumber: "",
     mobileNumber: "",
@@ -14,9 +27,32 @@ function RegisterPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    const newUser = {
+      gstNumber: gstNumber,
+      mobileNumber: mobileNumber,
+      businessName: businessName,
+      password: password,
+      email: email,
+    }
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/user/`, newUser);
+
+    if (response.status == 201) {
+      const data = response.data
+      console.log(data);
+      // localStorage.setItem('token', data.token)
+      navigate('/')
+    }
+
+    setEmail('');
+    setFormData('');
+    setPassword('');
+    setbusinessName('');
+    setgstNumber('');
+
+
+
   };
 
   return (
