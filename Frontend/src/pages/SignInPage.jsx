@@ -18,18 +18,25 @@ function SignInPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-900 w-full">
+    <div
+      className="flex items-center justify-center h-screen w-full bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('/bg-sm.png')`, 
+        backgroundSize: "cover", 
+        backgroundAttachment: "fixed", 
+      }}
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-96"
+        className="bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-md w-96"
       >
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-700">
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-100">
           Sign In
         </h2>
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-600 mb-1"
+            className="block text-sm font-medium text-gray-100 mb-1"
           >
             Email
           </label>
@@ -46,7 +53,7 @@ function SignInPage() {
         <div className="mb-6">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-600 mb-1"
+            className="block text-sm font-medium text-gray-100 mb-1"
           >
             Password
           </label>
@@ -66,12 +73,9 @@ function SignInPage() {
         >
           Sign In
         </button>
-        <p className="text-center text-gray-600 mt-4">
+        <p className="text-center text-gray-100 mt-4">
           Don't have an account?{" "}
-          <a
-            href="/login"
-            className="text-blue-500 hover:underline"
-          >
+          <a href="/login" className="text-blue-500 hover:underline">
             Register
           </a>
         </p>
