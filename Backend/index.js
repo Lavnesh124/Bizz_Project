@@ -4,12 +4,13 @@ import connectDB from "./db.js";
 import Product from "./routes/ProductRoutes.js";
 import User from "./routes/UserRoutes.js";
 import ProductCategory from "./routes/ProductCategoryRoutes.js";
-
-
-
+import cors from "cors"
+const app = express();
+app.use(cors());
+app.use(express.json());
 dotenv.config();
 
-const app = express();
+
 
 app.use(express.json());
 
