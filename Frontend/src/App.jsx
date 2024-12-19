@@ -15,31 +15,26 @@ import RegisterPage from "./pages/RegisterPage";
 import SignInPage from "./pages/SignInPage";
 
 function App() {
-	const isLoginPage = window.location.pathname.includes('/login');
-	const isSigninPage =  window.location.pathname.includes('/signin');
-	const FirstSigninPage =  window.location.pathname.includes('/');
-	
-	return (
-		<div className='flex h-screen  text-gray-100 overflow-hidden'>
-			
-			{!(isLoginPage || isSigninPage||FirstSigninPage) ? <Sidebar /> : ""}
-			
-			<Routes>
-			    <Route path='/login' element={<RegisterPage />} />
-				<Route path='/signin' element={<SignInPage />} />
-				<Route path='/' element={<SignInPage />} />
-				<Route path='/overview' element={<OverviewPage />} />
-				<Route path='/invoice' element={<InvoicePage />} />
-				<Route path='/products' element={<ProductsPage />} />
-				<Route path='/users' element={<UsersPage />} />
-				<Route path='/sales' element={<SalesPage />} />
-				<Route path='/orders' element={<OrdersPage />} />
-				<Route path='/analytics' element={<AnalyticsPage />} />
-				<Route path='/settings' element={<SettingsPage />} /> 
-				
-			</Routes>
-		</div> 
-	);
+    const isAuthPage = ['/login', '/'].includes(window.location.pathname);
+    
+    return (
+        <div className='flex h-screen text-gray-100 overflow-hidden'>
+            {!isAuthPage && <Sidebar />}
+            
+            <Routes>
+                <Route path='/login' element={<RegisterPage />} />
+                <Route path='/' element={<SignInPage />} />
+                <Route path='/overview' element={<OverviewPage />} />
+                <Route path='/invoice' element={<InvoicePage />} />
+                <Route path='/products' element={<ProductsPage />} />
+                <Route path='/users' element={<UsersPage />} />
+                <Route path='/sales' element={<SalesPage />} />
+                <Route path='/orders' element={<OrdersPage />} />
+                <Route path='/analytics' element={<AnalyticsPage />} />
+                <Route path='/settings' element={<SettingsPage />} />
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
