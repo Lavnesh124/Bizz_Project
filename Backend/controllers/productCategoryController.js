@@ -18,10 +18,16 @@ export const register = async (req, res) => {
                 success: false,
             });
         }
-        return res.status(201).json({
-            message: "ProductCategory created successfully",
-            success: true
+        const newProductCategory = new ProductCategory({
+            category,
+            gstRate,
         });
+
+        const savedProductCategory = await newProductCategory.save();
+
+
+        return res.status(201).json(savedProductCategory);
+
     }
     catch (err) {
         console.log(err);
@@ -38,7 +44,7 @@ export const register = async (req, res) => {
 export const updateProductCategory = async (req, res) => {
     try {
         const { category, gstRate } = req.body;
-        const productCatId = req.id;
+        const productCatId = req.params.id;
         let productcat = await ProductCategory.findById(productCatId);
         if (!productcat) {
             return res.status(400).json({
