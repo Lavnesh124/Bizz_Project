@@ -12,17 +12,23 @@ import SettingsPage from "./pages/SettingsPage";
 import InvoicePage from "./pages/InvoicePage";
 
 import RegisterPage from "./pages/RegisterPage";
-
+import SignInPage from "./pages/SignInPage";
 
 function App() {
-	const isSidebarVisible = window.location.pathname.includes('/login');
-	console.log("==>", isSidebarVisible);
+	const isLoginPage = window.location.pathname.includes('/login');
+	const isSigninPage =  window.location.pathname.includes('/signin');
+
+	// const isSidebarVisible1 = window.location.pathname.includes('/signin');
+	
 	return (
 		<div className='flex h-screen  text-gray-100 overflow-hidden'>
 			
-			{!isSidebarVisible ? <Sidebar /> : ""}
+			{!(isLoginPage || isSigninPage) ? <Sidebar /> : ""}
+			{/* {!isSidebarVisible1 ? <Sidebar /> : ""} */}
+			
 			<Routes>
 			    <Route path='/login' element={<RegisterPage />} />
+				<Route path='/signin' element={<SignInPage />} />
 				<Route path='/' element={<OverviewPage />} />
 				<Route path='/overview' element={<OverviewPage />} />
 				<Route path='/invoice' element={<InvoicePage />} />

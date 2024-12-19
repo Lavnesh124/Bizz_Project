@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 
-function RegisterPage() {
+function SignInPage() {
   const [formData, setFormData] = useState({
-    gstNumber: "",
-    mobileNumber: "",
     email: "",
     password: "",
-    businessName: "",
   });
 
   const handleChange = (e) => {
@@ -16,7 +13,8 @@ function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    console.log("Login Data:", formData);
+    // Add login logic here
   };
 
   return (
@@ -26,60 +24,8 @@ function RegisterPage() {
         className="bg-white p-8 rounded-lg shadow-md w-96"
       >
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-700">
-          Register
+          Sign In
         </h2>
-        <div className="mb-4">
-          <label
-            htmlFor="businessName"
-            className="block text-sm font-medium text-gray-600 mb-1"
-          >
-            Business Name
-          </label>
-          <input
-            type="text"
-            id="businessName"
-            name="businessName"
-            value={formData.businessName}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="gst"
-            className="block text-sm font-medium text-gray-600 mb-1"
-          >
-            GST Number
-          </label>
-          <input
-            type="text"
-            id="gst"
-            name="gstNumber"
-            value={formData.gstNumber}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="mobile"
-            className="block text-sm font-medium text-gray-600 mb-1"
-          >
-            Mobile Number
-          </label>
-          <input
-            type="tel"
-            id="mobile"
-            name="mobileNumber"
-            value={formData.mobileNumber}
-            onChange={handleChange}
-            pattern="[0-9]{10}"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
-          />
-        </div>
         <div className="mb-4">
           <label
             htmlFor="email"
@@ -118,15 +64,15 @@ function RegisterPage() {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
         >
-          Register
+          Sign In
         </button>
         <p className="text-center text-gray-600 mt-4">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <a
-            href="/signin"
+            href="/login"
             className="text-blue-500 hover:underline"
           >
-            Sign In
+            Register
           </a>
         </p>
       </form>
@@ -134,4 +80,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default SignInPage;
