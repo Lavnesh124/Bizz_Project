@@ -5,7 +5,7 @@ import axios from 'axios'
 function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [businessName, setbusinessName] = useState('');
+  const [BusinessName, setbusinessName] = useState('');
   const [mobileNumber, setmobileNumber] = useState('');
   const [gstNumber, setgstNumber] = useState('');
 
@@ -19,30 +19,27 @@ function RegisterPage() {
     mobileNumber: "",
     email: "",
     password: "",
-    businessName: "",
+    BusinessName: "",
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newUser = {
       gstNumber: gstNumber,
       mobileNumber: mobileNumber,
-      businessName: businessName,
+      BusinessName: BusinessName,
       password: password,
       email: email,
     }
+    console.log(newUser);
     const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/user/`, newUser);
+    console.log(response.status);
 
     if (response.status == 201) {
       const data = response.data
       console.log(data);
-      // localStorage.setItem('token', data.token)
-      navigate('/')
+      localStorage.setItem('token', data.token)
+      navigate('/overview')
     }
 
     setEmail('');
@@ -50,9 +47,6 @@ function RegisterPage() {
     setPassword('');
     setbusinessName('');
     setgstNumber('');
-
-
-
   };
 
   return (
@@ -75,8 +69,10 @@ function RegisterPage() {
             type="text"
             id="businessName"
             name="businessName"
-            value={formData.businessName}
-            onChange={handleChange}
+            value={BusinessName}
+            onChange={(e) => {
+              setbusinessName(e.target.value)
+            }}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
           />
@@ -92,8 +88,10 @@ function RegisterPage() {
             type="text"
             id="gst"
             name="gstNumber"
-            value={formData.gstNumber}
-            onChange={handleChange}
+            value={gstNumber}
+            onChange={(e) => {
+              setgstNumber(e.target.value)
+            }}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
           />
@@ -109,8 +107,10 @@ function RegisterPage() {
             type="tel"
             id="mobile"
             name="mobileNumber"
-            value={formData.mobileNumber}
-            onChange={handleChange}
+            value={mobileNumber}
+            onChange={(e) => {
+              setmobileNumber(e.target.value)
+            }}
             pattern="[0-9]{10}"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
@@ -127,8 +127,10 @@ function RegisterPage() {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
           />
@@ -144,8 +146,10 @@ function RegisterPage() {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
           />
