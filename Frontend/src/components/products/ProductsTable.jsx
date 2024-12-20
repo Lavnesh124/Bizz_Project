@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const PRODUCT_DATA = [
     { id: 1, name: "Wireless Earbuds", category: "Electronics", price: 59.99, stock: 143, sales: 1200 },
@@ -12,17 +14,20 @@ const PRODUCT_DATA = [
 
 const ProductsTable = () => {
 
+    const [ProductName, setProductName] = useState('');
+    const [unitOfMeasurement, setunitOfMeasurement] = useState('');
+    const [quantity, setquantity] = useState(0);
+    const [cost, setcost] = useState(0);
+    const [category, setcategory] = useState(0);
+
+    const navigate = useNavigate();
+
+
 
     const [searchTerm, setSearchTerm] = useState("");
     const [products, setProducts] = useState(PRODUCT_DATA); // Use state to store products
     const [isAddingProduct, setIsAddingProduct] = useState(false);
-    const [newProduct, setNewProduct] = useState({
-        name: "",
-        category: "",
-        price: "",
-        stock: "",
-        sales: "",
-    });
+
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value.toLowerCase());
@@ -32,29 +37,29 @@ const ProductsTable = () => {
         setIsAddingProduct(!isAddingProduct);
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewProduct((prev) => ({ ...prev, [name]: value }));
-    };
+    const handleAddProduct = async () => {
 
-    const handleAddProduct = () => {
         const newProductData = {
-            ...newProduct,
-            id: products.length + 1,
-            price: parseFloat(newProduct.price) || 0,
-            stock: parseInt(newProduct.stock) || 0,
-            sales: parseInt(newProduct.sales) || 0,
+            ProductName: ProductName,
+            cost: cost,
+            quantity: quantity,
+            unitOfMeasurement: unitOfMeasurement,
+            category: category
         };
-        setProducts((prevProducts) => [...prevProducts, newProductData]); // Update state
-        setNewProduct({
-            name: "",
-            category: "",
-            price: "",
-            stock: "",
-            sales: "",
-        });
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/product`, newProductData);
+
+        if (response.status == 201) {
+            const data = response.data
+            navigate('/products')
+        }
+
+        setProductName('');
+        setcost('');
+        setquantity('');
+        setunitOfMeasurement('');
+        setcategory('');
         setIsAddingProduct(false);
-    };
+    }
 
     // Filter products based on the search term
     const filteredProducts = products.filter(
@@ -101,46 +106,56 @@ const ProductsTable = () => {
                             placeholder="Product Name"
                             className="w-full bg-gray-800 text-white rounded-lg px-4 py-2"
                             name="name"
-                            value={newProduct.name}
-                            onChange={handleInputChange}
+                            value={ProductName}
+                            onChange={(e) => {
+                                setProductName(e.target.value)
+                            }}
                         />
                         <input
                             type="text"
                             placeholder="Category"
                             className="w-full bg-gray-800 text-white rounded-lg px-4 py-2"
                             name="category"
-                            value={newProduct.category}
-                            onChange={handleInputChange}
+                            value={category}
+                            onChange={(e) => {
+                                setcategory(e.target.value)
+                            }}
                         />
                         <input
                             type="number"
                             placeholder="Price"
                             className="w-full bg-gray-800 text-white rounded-lg px-4 py-2"
-                            name="price"
-                            value={newProduct.price}
-                            onChange={handleInputChange}
+                            name="cost"
+                            value={cost}
+                            onChange={(e) => {
+                                setcost(e.target.value)
+                            }}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Unit of measurement"
+                            className="w-full bg-gray-800 text-white rounded-lg px-4 py-2"
+                            name="unitOfMeasurement"
+                            value={unitOfMeasurement}
+                            onChange={(e) => {
+                                setunitOfMeasurement(e.target.value)
+                            }}
                         />
                         <input
                             type="number"
-                            placeholder="Stock"
+                            placeholder="Quantity"
                             className="w-full bg-gray-800 text-white rounded-lg px-4 py-2"
-                            name="stock"
-                            value={newProduct.stock}
-                            onChange={handleInputChange}
-                        />
-                        <input
-                            type="number"
-                            placeholder="Sales"
-                            className="w-full bg-gray-800 text-white rounded-lg px-4 py-2"
-                            name="sales"
-                            value={newProduct.sales}
-                            onChange={handleInputChange}
+                            name="quantity"
+                            value={quantity}
+                            onChange={(e) => {
+                                setquantity(e.target.value)
+                            }}
                         />
                         <button
                             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500"
                             onClick={handleAddProduct}
                         >
-                            Add Product
+                            Save
                         </button>
                     </div>
                 </div>

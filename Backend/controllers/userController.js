@@ -114,6 +114,16 @@ export const deleateUser = async (req, res) => {
     }
 };
 
+//get all user
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find(); // Retrieve all users
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Logout user
 export const logoutUser = (req, res) => {
     try {

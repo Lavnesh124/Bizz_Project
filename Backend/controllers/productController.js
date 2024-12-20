@@ -4,14 +4,14 @@ import Product from "../models/ProductModel.js";
 
 export const registerProduct = async (req, res) => {
     try {
-        const { name, type, unitOfMeasurement, quantity, cost } = req.body;
-        if (!name || !type || !unitOfMeasurement || !quantity || !cost) {
+        const { ProductName, unitOfMeasurement, quantity, cost } = req.body;
+        if (!ProductName || !unitOfMeasurement || !quantity || !cost) {
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
             });
         };
-        const user = await Product.findOne({ name });
+        const user = await Product.findOne({ ProductName });
         if (user) {
             // Corrected condition to check if the user exists
             return res.status(400).json({
@@ -20,8 +20,7 @@ export const registerProduct = async (req, res) => {
             });
         }
         const newProduct = new Product({
-            name,
-            type,
+            ProductName,
             unitOfMeasurement,
             quantity,
             cost,
@@ -129,7 +128,7 @@ export const deleateProduct = async (req, res) => {
 //later
 export const updateProfile = async (req, res) => {
     try {
-        const { name, type, unitOfMeasurement, quantity } = req.body;
+        const { ProductName, unitOfMeasurement, quantity, cost } = req.body;
         const productId = req.id;
         let product = await Product.findById(productId);
         if (!product) {
@@ -139,8 +138,8 @@ export const updateProfile = async (req, res) => {
             });
         }
 
-        if (name) product.name = name;
-        if (type) product.type = type;
+        if (ProductName) product.name = ProductName;
+        if (cost) product.cost = cost;
         if (unitOfMeasurement) product.unitOfMeasurement = unitOfMeasurement;
         if (quantity) product.quantity = quantity;
 
@@ -148,8 +147,8 @@ export const updateProfile = async (req, res) => {
 
         product = {
             _id: product._id,
-            name: product.name,
-            type: product.type,
+            ProductName: product.ProductName,
+            cost: product.cost,
             unitOfMeasurement: product.unitOfMeasurement,
             quantity: product.quantity,
         }
