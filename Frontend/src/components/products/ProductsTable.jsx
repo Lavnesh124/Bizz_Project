@@ -1,16 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 
-const PRODUCT_DATA = [
-    { id: 1, name: "Wireless Earbuds", category: "Electronics", price: 59.99, stock: 143, sales: 1200 },
-    { id: 2, name: "Leather Wallet", category: "Accessories", price: 39.99, stock: 89, sales: 800 },
-    { id: 3, name: "Smart Watch", category: "Electronics", price: 199.99, stock: 56, sales: 650 },
-    { id: 4, name: "Yoga Mat", category: "Fitness", price: 29.99, stock: 210, sales: 950 },
-    { id: 5, name: "Coffee Maker", category: "Home", price: 79.99, stock: 78, sales: 720 },
-];
 
 const ProductsTable = () => {
 
@@ -19,14 +12,31 @@ const ProductsTable = () => {
     const [quantity, setquantity] = useState(0);
     const [cost, setcost] = useState(0);
     const [category, setcategory] = useState(0);
+    const [products, setProducts] = useState([]);
 
     const navigate = useNavigate();
 
 
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [products, setProducts] = useState(PRODUCT_DATA); // Use state to store products
     const [isAddingProduct, setIsAddingProduct] = useState(false);
+
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/product/getall`);
+                if (response.status === 200) {
+                    // setProducts(response.data.data); // Assuming the products are in the `data` field
+                    console.log(response.data.data);
+                } // Assuming the products are in the `data` field
+            } catch (err) {
+                console.error("Error fetching products:");
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
 
     const handleSearch = (e) => {

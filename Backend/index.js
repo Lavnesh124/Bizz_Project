@@ -4,6 +4,9 @@ import connectDB from "./db.js";
 import Product from "./routes/ProductRoutes.js";
 import User from "./routes/UserRoutes.js";
 import ProductCategory from "./routes/ProductCategoryRoutes.js";
+import cors from "cors";
+
+
 
 
 
@@ -12,6 +15,10 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+}));
 
 
 app.use(express.urlencoded({ extended: true }));
