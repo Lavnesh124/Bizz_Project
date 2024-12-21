@@ -17,7 +17,7 @@ const ProductsTable = () => {
     const navigate = useNavigate();
 
 
-
+    const [shouldFetch, setShouldFetch] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [isAddingProduct, setIsAddingProduct] = useState(false);
 
@@ -27,8 +27,8 @@ const ProductsTable = () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/product/getall`);
                 if (response.status === 200) {
-                    // setProducts(response.data.data); // Assuming the products are in the `data` field
-                    console.log(response.data.data);
+                      setProducts(response.data.data); // Assuming the products are in the `data` field
+                    // console.log(response.data.data);
                 } // Assuming the products are in the `data` field
             } catch (err) {
                 console.error("Error fetching products:");
@@ -36,7 +36,7 @@ const ProductsTable = () => {
         };
 
         fetchProducts();
-    }, []);
+    }, [shouldFetch]);
 
 
     const handleSearch = (e) => {
@@ -59,8 +59,8 @@ const ProductsTable = () => {
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/product`, newProductData);
 
         if (response.status == 201) {
-            const data = response.data
-            navigate('/products')
+            setShouldFetch(!shouldFetch);
+            navigate('/products');
         }
 
         setProductName('');
@@ -74,7 +74,7 @@ const ProductsTable = () => {
     // Filter products based on the search term
     const filteredProducts = products.filter(
         (product) =>
-            product.name.toLowerCase().includes(searchTerm) ||
+            product.ProductName.toLowerCase().includes(searchTerm) ||
             product.category.toLowerCase().includes(searchTerm)
     );
     return (
@@ -182,13 +182,13 @@ const ProductsTable = () => {
                                 Category
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                                unit Of Measurement
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Price
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Stock
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                                Sales
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Actions
@@ -197,9 +197,9 @@ const ProductsTable = () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-700">
-                        {filteredProducts.map((product) => (
+                        {filteredProducts.map((product,index) => (
                             <motion.tr
-                                key={product.id}
+                                key={product.id||index}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.3 }}
@@ -210,26 +210,31 @@ const ProductsTable = () => {
                                         alt="Product img"
                                         className="size-10 rounded-full"
                                     />
-                                    {product.name}
+                                    {product.ProductName}
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                                     {product.category}
                                 </td>
-
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{product.unitOfMeasurement}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                    ${product.price.toFixed(2)}
+                                    ${product.cost.toFixed(2)}
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{product.stock}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{product.sales}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{product.quantity}</td>                        
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                    <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                                        <Edit size={18} />
+                                    <button
+                                    className="text-indigo-400 hover:text-indigo-300 mr-2"
+                                    onClick={() => handleEdit(item.id)} // Pass the item ID to the edit handler
+                                    >
+                                    <Edit size={18} />
                                     </button>
-                                    <button className="text-red-400 hover:text-red-300">
-                                        <Trash2 size={18} />
+                                    <button
+                                    className="text-red-400 hover:text-red-300"
+                                    onClick={() => handleDelete(item.id)} // Pass the item ID to the delete handler
+                                    >
+                                    <Trash2 size={18} />
                                     </button>
-                                </td>
+                                    </td>
                             </motion.tr>
                         ))}
                     </tbody>

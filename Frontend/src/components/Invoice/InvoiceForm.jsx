@@ -115,7 +115,7 @@ const InvoiceForm = () => {
     <Form onSubmit={openModal}>
       <Row>
         <Col md={8} lg={9}>
-          <Card className="p-4 p-xl-5 my-3 my-xl-4">
+          <Card className="p-4 p-xl-5 my-3 my-xl-4 bg-gray-600" >
             <div className="d-flex flex-row align-items-start justify-content-between mb-3">
               <div className="d-flex flex-column">
                 <div className="d-flex flex-column">
