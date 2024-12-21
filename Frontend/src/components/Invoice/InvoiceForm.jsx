@@ -20,9 +20,11 @@ const InvoiceForm = () => {
   const [billTo, setBillTo] = useState("");
   const [billToEmail, setBillToEmail] = useState("");
   const [billToAddress, setBillToAddress] = useState("");
-  const [billFrom, setBillFrom] = useState("");
-  const [billFromEmail, setBillFromEmail] = useState("");
-  const [billFromAddress, setBillFromAddress] = useState("");
+  const [billToMobileNumber, setbillToMobileNumber] = useState("");
+  const [billFrom, setBillFrom] = useState("Amazing Company");
+  const [billFromEmail, setBillFromEmail] = useState("Amazing@gmail.com");
+  const [billFromMobileNumber, setbillFromMobileNumber] = useState("756889898");
+  const [billFromAddress, setBillFromAddress] = useState("Palo Alto, CA");
   const [notes, setNotes] = useState(
     "Thank you for doing business with us. Have a great day!"
   );
@@ -153,37 +155,11 @@ const InvoiceForm = () => {
             <Row className="mb-5">
               <Col>
                 <Form.Label className="fw-bold">Bill from:</Form.Label>
-                <Form.Control
-                  placeholder="Who is this invoice from?"
-                  rows={3}
-                  value={billFrom}
-                  type="text"
-                  name="billFrom"
-                  className="my-2"
-                  onChange={handleChange(setBillFrom)}
-                  autoComplete="name"
-                  required
-                />
-                <Form.Control
-                  placeholder="Email address"
-                  value={billFromEmail}
-                  type="email"
-                  name="billFromEmail"
-                  className="my-2"
-                  onChange={handleChange(setBillFromEmail)}
-                  autoComplete="email"
-                  required
-                />
-                <Form.Control
-                  placeholder="Billing address"
-                  value={billFromAddress}
-                  type="text"
-                  name="billFromAddress"
-                  className="my-2"
-                  autoComplete="address"
-                  onChange={handleChange(setBillFromAddress)}
-                  required
-                />
+                <div className="fw-bold">{billFrom}</div>
+                <div className="fw-bold">{billFromEmail}</div>
+                <div className="fw-bold">{billFromMobileNumber}</div>
+                <div className="fw-bold">{billFromAddress}</div>
+                
               </Col>
               <Col>
                 <Form.Label className="fw-bold">Bill to:</Form.Label>
@@ -206,6 +182,16 @@ const InvoiceForm = () => {
                   className="my-2"
                   onChange={handleChange(setBillToEmail)}
                   autoComplete="email"
+                  required
+                />
+                <Form.Control
+                  placeholder="Mobile Number"
+                  value={billToMobileNumber}
+                  type="number"
+                  name="billToMobileNumber"
+                  className="my-2"
+                  autoComplete="Mobile Number"
+                  onChange={handleChange(setbillToMobileNumber)}
                   required
                 />
                 <Form.Control
@@ -288,9 +274,11 @@ const InvoiceForm = () => {
                 invoiceNumber,
                 billTo,
                 billToEmail,
+                billToMobileNumber,
                 billToAddress,
                 billFrom,
                 billFromEmail,
+                billFromMobileNumber,
                 billFromAddress,
                 notes,
               }}
