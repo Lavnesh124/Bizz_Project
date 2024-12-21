@@ -5,6 +5,7 @@ import Product from "./routes/ProductRoutes.js";
 import User from "./routes/UserRoutes.js";
 import ProductCategory from "./routes/ProductCategoryRoutes.js";
 import cors from "cors";
+import Customer from "./routes/CustomerRoutes.js"
 
 
 
@@ -27,8 +28,7 @@ connectDB();
 const PORT = 8088;
 app.use("/api/v1/product", Product);
 app.use("/api/v1/productCategory", ProductCategory);
-
-
+app.use("/api/v1/customer", Customer);
 app.use('/api/v1/user', User)
 
 
